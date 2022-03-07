@@ -24,6 +24,7 @@ const Timer = () => {
     return (
         <div>
             <p>{time.pomodoro}</p>
+            <p>{time.pomodoro}</p>
             <button onClick={timerStartHandler}>Start</button>
         </div>
     );
