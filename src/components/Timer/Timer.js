@@ -1,76 +1,36 @@
-import React, { useState, useReducer, useEffect } from 'react';
-import useInterval from './../../hooks/useInterval';
-import convertFromSecondToMinutes from './../../utils/convertFromSecondToMinutes';
-import { ACTIONS } from './../../utils/actions';
+import useTimer from './../../hooks/useTimer';
+import fromSecToMin from '../../utils/fromSecToMin';
 
-const initialState = {
-    pomodoro: 20,
-    shortBreak: 5,
-    longBreak: 10,
-};
+const POMODORO = 10;
+const SHORT_BREAK = 5;
+const LONG_BREAK = 20;
 
 const intervalOrder = [
-    'pomodoro',
-    'shortBreak',
-    'pomodoro',
-    'shortBreak',
-    'pomodoro',
-    'shortBreak',
-    'pomodoro',
-    'longBreak',
+    POMODORO,
+    SHORT_BREAK,
+    POMODORO,
+    SHORT_BREAK,
+    POMODORO,
+    SHORT_BREAK,
+    POMODORO,
+    LONG_BREAK,
 ];
 
-const reducer = (state, action) => {
-    switch (action.type) {
-        case ACTIONS.POMODORO:
-            return { ...state, pomodoro: state.pomodoro - 1 };
-        case ACTIONS.SHORTBREAK:
-            return { ...state, shortBreak: state.shortBreak - 1 };
-        case ACTIONS.LONGBREAK:
-            return { ...state, longBreak: state.longBreak - 1 };
-        case ACTIONS.RESET:
-            return initialState;
-        default:
-            return state;
-    }
-};
-
 const Timer = () => {
-    const [state, dispatch] = useReducer(reducer, initialState);
-    const [delay] = useState(100);
-    const [isRunning, setIsRunning] = useState(false);
-    const [intervalElement, setIntervalElement] = useState(0);
-
-    const actualRunningTimer = intervalOrder[intervalElement];
-
-    useEffect(() => {
-        intervalElement === intervalOrder.length && setIntervalElement(0);
-
-        if (state[actualRunningTimer] <= 0) {
-            dispatch({ type: ACTIONS.RESET });
-            setIntervalElement((prev) => prev + 1);
-        }
-    }, [state, actualRunningTimer, intervalElement]);
-
-    useInterval(
-        () => {
-            dispatch({ type: ACTIONS[actualRunningTimer.toUpperCase()] });
-        },
-        isRunning ? delay : null
-    );
+    const { timer, isRunning, setIsRunning } = useTimer(intervalOrder);
 
     const timerStartHandler = () => {
         setIsRunning((prev) => !prev);
     };
 
-    const timeToDisplay = convertFromSecondToMinutes(
-        state[intervalOrder[intervalElement]]
-    );
+    const timeToDisplay = fromSecToMin(timer);
+
+    const buttonStatus = isRunning ? 'Pause' : 'Start';
 
     return (
         <div>
             <p>{timeToDisplay}</p>
-            <button onClick={timerStartHandler}>Start</button>
+            <button onClick={timerStartHandler}>{buttonStatus}</button>
         </div>
     );
 };
