@@ -1,10 +1,27 @@
-import { useState } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import useInterval from './useInterval';
 
-function useTimer(intervalOrder) {
+function useTimer(pomodoro, shortBreak, longBreak) {
+    const intervalOrder = [
+        pomodoro,
+        shortBreak,
+        pomodoro,
+        shortBreak,
+        pomodoro,
+        shortBreak,
+        pomodoro,
+        longBreak,
+    ];
+
     const [index, setIndex] = useState(0);
     const [timer, setTimer] = useState(intervalOrder[index]);
     const [isRunning, setIsRunning] = useState(false);
+
+    useEffect(() => {
+        setIndex(0);
+        setTimer(intervalOrder[index]);
+        setIsRunning(false);
+    }, [pomodoro, shortBreak, longBreak]);
 
     useInterval(
         () => {
