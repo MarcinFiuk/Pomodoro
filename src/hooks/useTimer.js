@@ -34,7 +34,7 @@ function useTimer(pomodoro, shortBreak, longBreak) {
             setIndex(newIndex);
             setTimer(intervalOrder[newIndex]);
         },
-        isRunning ? 100 : null
+        isRunning ? 1000 : null
     );
 
     return { timer, isRunning, setIsRunning };
