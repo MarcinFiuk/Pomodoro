@@ -1,20 +1,26 @@
 import React from 'react';
-import styled, { keyframes } from 'styled-components';
+import styled, { keyframes, css } from 'styled-components';
 import { theme } from './../styles/theme';
+import { useSpring, animated } from 'react-spring';
 
-function ProgressBar({ children, animationPause, animationTime, pomodoro }) {
+function ProgressBar({ children, animationPause, animationTime }) {
+    const props = useSpring({
+        to: { strokeDashoffset: 283 },
+        from: { strokeDashoffset: 0 },
+        config: { duration: animationTime * 1000 },
+        pause: !animationPause,
+        loop: true,
+    });
+
     return (
         <Container>
             <SvgElement viewBox='0 0 100 100'>
                 <GContainer>
                     <Circle cx='50' cy='50' r='50' />
                     <Path
-                        // strokeDasharray='283'
-                        // strokeDashoffset='100'
                         d=' M
                         50, 50 m -43, 0 a 43,43 0 1,0 86,0 a 43,43 0 1,0 -86,0 '
-                        pause={animationPause}
-                        animationTime={pomodoro}
+                        style={props}
                     />
                 </GContainer>
             </SvgElement>
@@ -22,12 +28,6 @@ function ProgressBar({ children, animationPause, animationTime, pomodoro }) {
         </Container>
     );
 }
-
-const reduceCircle = keyframes`
-    to {
-        stroke-dashoffset:283;
-    }
-`;
 
 const Container = styled.div`
     position: relative;
@@ -73,24 +73,20 @@ const Circle = styled.circle.attrs(({ cx, cy, r }) => ({
     fill: ${theme.color.backgroundSecondary};
 `;
 
-const Path = styled.path.attrs(({ strokeDasharray, strokeDashoffset, d }) => ({
-    strokeDasharray,
-    strokeDashoffset,
-    d,
-}))`
+const Path = styled(animated.path).attrs(
+    ({ strokeDasharray, strokeDashoffset, d }) => ({
+        d,
+    })
+)`
     stroke-width: 2.75px;
     stroke-linecap: round;
     transform: rotate(90deg);
     transform-origin: center;
-    animation: ${reduceCircle} ${({ animationTime }) => animationTime}s linear
-        infinite;
     fill-rule: nonzero;
     stroke: currentColor;
     color: ${theme.color.decorationFirst};
     stroke-dasharray: 283;
     stroke-dashoffset: 0;
-    animation-play-state: paused;
-    animation-play-state: ${({ pause }) => (pause ? 'running' : 'paused')};
 `;
 
 //NOTE: after one second pass animation must be trigger

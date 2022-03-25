@@ -15,29 +15,32 @@ function useTimer(pomodoro, shortBreak, longBreak) {
 
     const [index, setIndex] = useState(0);
     const [timer, setTimer] = useState(intervalOrder[index]);
+    const [timerTime, setTimerTime] = useState(intervalOrder[index]);
     const [isRunning, setIsRunning] = useState(false);
 
     useEffect(() => {
         setIndex(0);
         setTimer(intervalOrder[0]);
+        setTimerTime(intervalOrder[0]);
         setIsRunning(false);
     }, [pomodoro, shortBreak, longBreak]);
 
     useInterval(
         () => {
             if (timer > 0) {
-                return setTimer((prevTimer) => prevTimer - 1);
+                return setTimer((prevTimer) => prevTimer - 0.1);
             }
 
             const newIndex = index === intervalOrder.length - 1 ? 0 : index + 1;
 
             setIndex(newIndex);
             setTimer(intervalOrder[newIndex]);
+            setTimerTime(intervalOrder[newIndex]);
         },
-        isRunning ? 1000 : null
+        isRunning ? 100 : null
     );
 
-    return { timer, isRunning, setIsRunning };
+    return { timer, timerTime, isRunning, setIsRunning };
 }
 
 export default useTimer;

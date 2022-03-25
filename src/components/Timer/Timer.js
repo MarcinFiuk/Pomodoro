@@ -11,7 +11,7 @@ const Timer = () => {
     const [shortBreak, setShortBreak] = useState(5);
     const [longBreak, setLongBreak] = useState(20);
 
-    const { timer, isRunning, setIsRunning } = useTimer(
+    const { timer, timerTime, isRunning, setIsRunning } = useTimer(
         pomodoro,
         shortBreak,
         longBreak
@@ -35,7 +35,7 @@ const Timer = () => {
         setIsRunning((prev) => !prev);
     };
 
-    const timeToDisplay = fromSecToMin(timer);
+    const timeToDisplay = fromSecToMin(timer.toFixed());
 
     const buttonStatus = isRunning ? 'Pause' : 'Start';
 
@@ -47,11 +47,7 @@ const Timer = () => {
                 <TimerInput label='long break' />
                 <button type='submit'>Submit</button>
             </form> */}
-            <ProgressBar
-                animationTime={timer}
-                animationPause={isRunning}
-                pomodoro={pomodoro}
-            >
+            <ProgressBar animationTime={timerTime} animationPause={isRunning}>
                 <TimerWrapper>
                     <TimeStyled>{timeToDisplay}</TimeStyled>
                     <Button onClick={timerStartHandler}>{buttonStatus}</Button>
