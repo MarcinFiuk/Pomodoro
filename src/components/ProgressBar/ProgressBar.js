@@ -3,13 +3,14 @@ import styled, { keyframes, css } from 'styled-components';
 import { theme } from './../styles/theme';
 import { useSpring, animated } from 'react-spring';
 
-function ProgressBar({ children, animationPause, animationTime }) {
+function ProgressBar({ children, animationPause, animationTime, reset }) {
     const props = useSpring({
         to: { strokeDashoffset: 283 },
         from: { strokeDashoffset: 0 },
         config: { duration: animationTime * 1000 },
         pause: !animationPause,
         loop: true,
+        reset: reset,
     });
 
     return (

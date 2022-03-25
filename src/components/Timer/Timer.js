@@ -10,6 +10,7 @@ const Timer = () => {
     const [pomodoro, setPomodoro] = useState(10);
     const [shortBreak, setShortBreak] = useState(5);
     const [longBreak, setLongBreak] = useState(20);
+    const [reset, setReset] = useState(false);
 
     const { timer, timerTime, isRunning, setIsRunning } = useTimer(
         pomodoro,
@@ -29,10 +30,12 @@ const Timer = () => {
         setPomodoro(pomodoroTime);
         setShortBreak(shortBreakTime);
         setLongBreak(longBreakTime);
+        setReset(true);
     };
 
     const timerStartHandler = () => {
         setIsRunning((prev) => !prev);
+        setReset(false);
     };
 
     const timeToDisplay = fromSecToMin(timer.toFixed());
@@ -41,13 +44,17 @@ const Timer = () => {
 
     return (
         <>
-            {/* <form onSubmit={submitHandler}>
+            <form onSubmit={submitHandler}>
                 <TimerInput label='pomodoro' />
                 <TimerInput label='short break' />
                 <TimerInput label='long break' />
                 <button type='submit'>Submit</button>
-            </form> */}
-            <ProgressBar animationTime={timerTime} animationPause={isRunning}>
+            </form>
+            <ProgressBar
+                animationTime={timerTime}
+                animationPause={isRunning}
+                reset={reset}
+            >
                 <TimerWrapper>
                     <TimeStyled>{timeToDisplay}</TimeStyled>
                     <Button onClick={timerStartHandler}>{buttonStatus}</Button>
