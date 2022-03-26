@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect } from 'react';
 import useInterval from './useInterval';
 
 function useTimer(pomodoro, shortBreak, longBreak) {
@@ -19,7 +19,7 @@ function useTimer(pomodoro, shortBreak, longBreak) {
 
     useEffect(() => {
         setIndex(0);
-        setTimer(intervalOrder[index]);
+        setTimer(intervalOrder[0]);
         setIsRunning(false);
     }, [pomodoro, shortBreak, longBreak]);
 
