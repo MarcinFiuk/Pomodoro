@@ -1,17 +1,38 @@
-import React from 'react';
-import styled, { keyframes, css } from 'styled-components';
+import React, { useEffect, useState, useRef } from 'react';
+import styled from 'styled-components';
 import { theme } from './../styles/theme';
 import { useSpring, animated } from 'react-spring';
 
-function ProgressBar({ children, animationPause, animationTime, reset }) {
-    const props = useSpring({
+function ProgressBar(props) {
+    const { children, pause, animationTime, reset } = props;
+    const pathRef = useRef();
+
+    const [resetAnimation, setResetAnimation] = useState(false);
+
+    const durationTime = animationTime * 1000;
+
+    const animationParameters = useSpring({
         to: { strokeDashoffset: 283 },
         from: { strokeDashoffset: 0 },
-        config: { duration: animationTime * 1000 },
-        pause: !animationPause,
-        loop: true,
-        reset: reset,
+        config: { duration: durationTime },
+        reset: resetAnimation,
+        pause: pause,
+        delay: 500,
+        onRest: () => setResetAnimation(true),
     });
+
+    useEffect(() => {
+        setResetAnimation(true);
+        pathRef.current.style.strokeDashoffset = 0;
+
+        const intervalID = setInterval(() => setResetAnimation(false), 100);
+
+        return () => clearInterval(intervalID);
+    }, [reset]);
+
+    useEffect(() => {
+        setResetAnimation(false);
+    }, [animationTime]);
 
     return (
         <Container>
@@ -19,9 +40,10 @@ function ProgressBar({ children, animationPause, animationTime, reset }) {
                 <GContainer>
                     <Circle cx='50' cy='50' r='50' />
                     <Path
+                        ref={pathRef}
                         d=' M
                         50, 50 m -43, 0 a 43,43 0 1,0 86,0 a 43,43 0 1,0 -86,0 '
-                        style={props}
+                        style={animationParameters}
                     />
                 </GContainer>
             </SvgElement>
@@ -74,11 +96,9 @@ const Circle = styled.circle.attrs(({ cx, cy, r }) => ({
     fill: ${theme.color.backgroundSecondary};
 `;
 
-const Path = styled(animated.path).attrs(
-    ({ strokeDasharray, strokeDashoffset, d }) => ({
-        d,
-    })
-)`
+const Path = styled(animated.path).attrs(({ d }) => ({
+    d,
+}))`
     stroke-width: 2.75px;
     stroke-linecap: round;
     transform: rotate(90deg);
@@ -89,7 +109,5 @@ const Path = styled(animated.path).attrs(
     stroke-dasharray: 283;
     stroke-dashoffset: 0;
 `;
-
-//NOTE: after one second pass animation must be trigger
 
 export default ProgressBar;

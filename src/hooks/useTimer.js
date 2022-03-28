@@ -28,7 +28,7 @@ function useTimer(pomodoro, shortBreak, longBreak) {
     useInterval(
         () => {
             if (timer > 0) {
-                return setTimer((prevTimer) => prevTimer - 0.1);
+                return setTimer((prevTimer) => prevTimer - 0.5);
             }
 
             const newIndex = index === intervalOrder.length - 1 ? 0 : index + 1;
@@ -37,7 +37,7 @@ function useTimer(pomodoro, shortBreak, longBreak) {
             setTimer(intervalOrder[newIndex]);
             setTimerTime(intervalOrder[newIndex]);
         },
-        isRunning ? 100 : null
+        isRunning ? 500 : null
     );
 
     return { timer, timerTime, isRunning, setIsRunning };

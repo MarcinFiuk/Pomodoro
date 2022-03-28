@@ -7,8 +7,8 @@ import TimerInput from './../Input/TimerInput';
 import ProgressBar from './../ProgressBar/ProgressBar';
 
 const Timer = () => {
-    const [pomodoro, setPomodoro] = useState(10);
-    const [shortBreak, setShortBreak] = useState(5);
+    const [pomodoro, setPomodoro] = useState(3);
+    const [shortBreak, setShortBreak] = useState(2);
     const [longBreak, setLongBreak] = useState(20);
     const [reset, setReset] = useState(false);
 
@@ -52,8 +52,9 @@ const Timer = () => {
             </form>
             <ProgressBar
                 animationTime={timerTime}
-                animationPause={isRunning}
                 reset={reset}
+                pause={!isRunning}
+                timer={timer}
             >
                 <TimerWrapper>
                     <TimeStyled>{timeToDisplay}</TimeStyled>
