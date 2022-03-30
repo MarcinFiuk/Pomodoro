@@ -44,12 +44,12 @@ const Timer = () => {
 
     return (
         <>
-            <form onSubmit={submitHandler}>
+            {/* <form onSubmit={submitHandler}>
                 <TimerInput label='pomodoro' />
                 <TimerInput label='short break' />
                 <TimerInput label='long break' />
                 <button type='submit'>Submit</button>
-            </form>
+            </form> */}
             <ProgressBar
                 timerEnd={timerTime}
                 reset={reset}
