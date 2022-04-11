@@ -1,18 +1,19 @@
 import styled from 'styled-components';
+import { theme } from './../styles/theme';
 
 import Timer from '../Timer/Timer';
 import ActiveStages from './../ActiveStages/ActiveStages';
 import Logo from './../../assets/Logo';
 import IconSetting from './../../assets/IconSetting';
 
-const Main = () => {
+const Main = ({ dynamicStyle }) => {
     return (
-        <MainStyled>
+        <MainStyled dynamicFont={dynamicStyle.font}>
             <h1>
                 <Logo />
             </h1>
-            <ActiveStages />
-            <Timer />
+            <ActiveStages dynamicColor={dynamicStyle.color} />
+            <Timer dynamicColor={dynamicStyle.color} />
             <SettingButton>
                 <IconSetting />
             </SettingButton>
@@ -26,6 +27,8 @@ const MainStyled = styled.main`
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
+    font-family: ${({ dynamicFont }) => theme.font[dynamicFont].fontFamily};
+    font-weight: ${({ dynamicFont }) => theme.font[dynamicFont].fontWeight};
 `;
 
 const SettingButton = styled.button`

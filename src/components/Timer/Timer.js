@@ -6,10 +6,10 @@ import fromSecToMin from '../../utils/fromSecToMin';
 import TimerInput from './../Input/TimerInput';
 import ProgressBar from './../ProgressBar/ProgressBar';
 
-const Timer = () => {
-    const [pomodoro, setPomodoro] = useState(4);
-    const [shortBreak, setShortBreak] = useState(4);
-    const [longBreak, setLongBreak] = useState(4);
+const Timer = ({ dynamicColor }) => {
+    const [pomodoro, setPomodoro] = useState(3);
+    const [shortBreak, setShortBreak] = useState(2);
+    const [longBreak, setLongBreak] = useState(20);
     const [reset, setReset] = useState(false);
 
     const { timer, timerTime, isRunning, setIsRunning } = useTimer(
@@ -55,6 +55,7 @@ const Timer = () => {
                 reset={reset}
                 pause={!isRunning}
                 timer={timer}
+                dynamicColor={dynamicColor}
             >
                 <TimerWrapper>
                     <TimeStyled>{timeToDisplay}</TimeStyled>
@@ -75,8 +76,6 @@ const TimerWrapper = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    font-family: ${theme.font.kumbhSans.fontFamily};
-    font-weight: ${theme.font.kumbhSans.fontWeight};
     color: ${theme.color.textFirst};
 `;
 

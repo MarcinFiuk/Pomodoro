@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { theme } from './../styles/theme';
 
 function ProgressBar(props) {
-    const { children, pause, timerEnd, timer, reset } = props;
+    const { children, pause, timerEnd, timer, reset, dynamicColor } = props;
     const strokeDasharray = 283;
 
     const animation = {
@@ -24,6 +24,7 @@ function ProgressBar(props) {
                     <Path
                         d="M 50, 50 m -43, 0 a 43,43 0 1,0 86,0 a 43,43 0 1,0 -86,0"
                         style={animation}
+                        dynamiccolor={dynamicColor}
                     />
                 </GContainer>
             </SvgElement>
@@ -53,6 +54,7 @@ const Container = styled.div`
         width: clamp(300px, 50vw, 410px);
         height: clamp(300px, 50vw, 410px);
         border-radius: 50%;
+        z-index: -1;
     }
 `;
 
@@ -85,7 +87,7 @@ const Path = styled.path.attrs(({ d }) => ({
     transform-origin: center;
     fill-rule: nonzero;
     stroke: currentColor;
-    color: ${theme.color.decorationFirst};
+    color: ${({ dynamiccolor }) => theme.color[dynamiccolor]};
     stroke-dasharray: 283;
     stroke-dashoffset: 0;
     transition: stroke-dashoffset 1s linear;
