@@ -25,10 +25,13 @@ function useTimer(pomodoro, shortBreak, longBreak) {
         setIsRunning(false);
     }, [pomodoro, shortBreak, longBreak]);
 
+    const precision = 1; // In seconds
+    const precisionInMs = precision * 1000;
+
     useInterval(
         () => {
             if (timer > 0) {
-                return setTimer((prevTimer) => prevTimer - 0.5);
+                return setTimer((prevTimer) => prevTimer - precision);
             }
 
             const newIndex = index === intervalOrder.length - 1 ? 0 : index + 1;
@@ -37,7 +40,7 @@ function useTimer(pomodoro, shortBreak, longBreak) {
             setTimer(intervalOrder[newIndex]);
             setTimerTime(intervalOrder[newIndex]);
         },
-        isRunning ? 500 : null
+        isRunning ? precisionInMs : null
     );
 
     return { timer, timerTime, isRunning, setIsRunning };
