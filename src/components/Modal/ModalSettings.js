@@ -1,16 +1,29 @@
 import styled from 'styled-components';
+import { useDispatch } from 'react-redux';
 
+import { setColor, setFont } from './../../redux/modalSlice';
 import { theme } from './../styles/theme';
 import { Flex } from './../styles/styledElements';
 
 function ModalSettings({ data }) {
     const { title, buttons } = data;
+    const dispatch = useDispatch();
+
+    const dispatchData = (font, color) => {
+        if (font) dispatch(setFont(font));
+        if (color) dispatch(setColor(color));
+    };
 
     const buttonsXml = buttons.map((button) => {
         const { id, text, fontType, bgcColor } = button;
 
         return (
-            <ChangeSettingButton key={id} font={fontType} bgc={bgcColor}>
+            <ChangeSettingButton
+                key={id}
+                font={fontType}
+                bgc={bgcColor}
+                onClick={() => dispatchData(fontType, bgcColor)}
+            >
                 {text}
             </ChangeSettingButton>
         );

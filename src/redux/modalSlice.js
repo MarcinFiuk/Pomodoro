@@ -25,7 +25,7 @@ const modalSlice = createSlice({
             state.font = action.payload;
         },
         setColor: (state, action) => {
-            state.color = action.payload;
+            state.bgcColor = action.payload;
         },
         setInputs: (state, action) => {
             state.inputs = action.payload;

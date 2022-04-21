@@ -13,13 +13,12 @@ import ModalSettings from './ModalSettings';
 
 function Modal() {
     const showModal = useSelector((state) => state.modal.showModal);
+    const decorationColor = useSelector((state) => state.modal.bgcColor);
     const dispatch = useDispatch();
 
     const closeModalHandler = useCallback(
         (e) => {
-            console.log(e.key === 'Escape');
             if (e.key === 'Escape' && showModal) {
-                console.log('tak');
                 dispatch(closeModal());
             }
         },
@@ -47,7 +46,7 @@ function Modal() {
                         <DecorationElement />
                         <ModalSettings data={color} />
                     </Wrapper>
-                    <ApplyButton>Apply</ApplyButton>
+                    <ApplyButton bgcColor={decorationColor}>Apply</ApplyButton>
                 </MainWrapper>
             </>,
             document.getElementById('modal')
@@ -59,8 +58,6 @@ const MainWrapper = styled.div`
     position: absolute;
     top: 10%;
     left: calc((100% - clamp(327px, 71vw, 540px)) / 2);
-    /* font-family: {({ dynamicFont }) => theme.font[dynamicFont].fontFamily};
-    font-weight: {({ dynamicFont }) => theme.font[dynamicFont].fontWeight}; */
     z-index: 999;
 `;
 
@@ -88,7 +85,7 @@ const ApplyButton = styled.button`
     transform: translateX(-50%);
     border: none;
     border-radius: 26.5px;
-    background-color: red; //NOTE: color must to change dynamically
+    background-color: ${({ bgcColor }) => theme.color[bgcColor]};
     font-size: 1rem;
     line-height: 20px;
     color: ${theme.color.backgroundThird};
