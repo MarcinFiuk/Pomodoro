@@ -1,14 +1,22 @@
-import React from 'react';
 import styled from 'styled-components';
+import { useDispatch } from 'react-redux';
+
+import { closeModal } from './../../redux/modalSlice';
 import { theme } from './../styles/theme';
 import IconClose from './../../assets/IconClose';
 import { Flex } from './../styles/styledElements';
 
 function ModalHeader() {
+    const dispatch = useDispatch();
+
+    const closeModalHandler = () => {
+        dispatch(closeModal());
+    };
+
     return (
         <SingleWrapper as='header' paddingBottom='1.5rem'>
             <h2>Settings</h2>
-            <CloseIconStyle>
+            <CloseIconStyle onClick={closeModalHandler}>
                 <IconClose />
             </CloseIconStyle>
         </SingleWrapper>

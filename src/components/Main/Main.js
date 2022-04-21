@@ -1,20 +1,28 @@
 import styled from 'styled-components';
 import { theme } from './../styles/theme';
+import { useDispatch } from 'react-redux';
 
 import Timer from '../Timer/Timer';
 import ActiveStages from './../ActiveStages/ActiveStages';
 import Logo from './../../assets/Logo';
 import IconSetting from './../../assets/IconSetting';
+import { openModal } from './../../redux/modalSlice';
 
-const Main = ({ dynamicStyle }) => {
+const Main = () => {
+    const dispatch = useDispatch();
+
+    const showModalHandler = () => {
+        dispatch(openModal());
+    };
+
     return (
-        <MainStyled dynamicFont={dynamicStyle.font}>
+        <MainStyled>
             <h1>
                 <Logo />
             </h1>
-            <ActiveStages dynamicColor={dynamicStyle.color} />
-            <Timer dynamicColor={dynamicStyle.color} />
-            <SettingButton>
+            <ActiveStages />
+            <Timer />
+            <SettingButton onClick={showModalHandler}>
                 <IconSetting />
             </SettingButton>
         </MainStyled>
@@ -27,8 +35,8 @@ const MainStyled = styled.main`
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
-    font-family: ${({ dynamicFont }) => theme.font[dynamicFont].fontFamily};
-    font-weight: ${({ dynamicFont }) => theme.font[dynamicFont].fontWeight};
+    font-family: ${theme.font.kumbhSans.fontFamily};
+    font-weight: ${theme.font.kumbhSans.fontWeight};
 `;
 
 const SettingButton = styled.button`

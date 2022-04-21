@@ -1,6 +1,9 @@
+import { useEffect, useCallback } from 'react';
 import { createPortal } from 'react-dom';
 import styled from 'styled-components';
+import { useSelector, useDispatch } from 'react-redux';
 
+import { closeModal } from './../../redux/modalSlice';
 import { theme } from './../styles/theme';
 import { font, color } from './modalSettingData';
 import Backdrop from './Backdrop';
@@ -9,23 +12,46 @@ import ModalInput from './ModalInput';
 import ModalSettings from './ModalSettings';
 
 function Modal() {
-    return createPortal(
-        <>
-            <Backdrop />
-            <MainWrapper>
-                <Wrapper>
-                    <ModalHeader />
-                    <DecorationElement wide />
-                    <ModalInput />
-                    <DecorationElement />
-                    <ModalSettings data={font} />
-                    <DecorationElement />
-                    <ModalSettings data={color} />
-                </Wrapper>
-                <ApplyButton>Apply</ApplyButton>
-            </MainWrapper>
-        </>,
-        document.getElementById('modal')
+    const showModal = useSelector((state) => state.modal.showModal);
+    const dispatch = useDispatch();
+
+    const closeModalHandler = useCallback(
+        (e) => {
+            console.log(e.key === 'Escape');
+            if (e.key === 'Escape' && showModal) {
+                console.log('tak');
+                dispatch(closeModal());
+            }
+        },
+        [dispatch, showModal]
+    );
+
+    useEffect(() => {
+        document.addEventListener('keydown', closeModalHandler);
+
+        return () => document.removeEventListener('keydown', closeModalHandler);
+    }, [closeModalHandler]);
+
+    return (
+        showModal &&
+        createPortal(
+            <>
+                <Backdrop />
+                <MainWrapper>
+                    <Wrapper>
+                        <ModalHeader />
+                        <DecorationElement wide />
+                        <ModalInput />
+                        <DecorationElement />
+                        <ModalSettings data={font} />
+                        <DecorationElement />
+                        <ModalSettings data={color} />
+                    </Wrapper>
+                    <ApplyButton>Apply</ApplyButton>
+                </MainWrapper>
+            </>,
+            document.getElementById('modal')
+        )
     );
 }
 
