@@ -17,7 +17,7 @@ const StagesWrapper = styled.div`
     display: flex;
     justify-content: space-between;
     background-color: ${theme.color.backgroundSecondary};
-    width: clamp(20.5rem, 49vw, 23.25rem);
+    width: clamp(20rem, 49vw, 23rem);
     padding: 0.5em;
     border-radius: 2em;
 `;
@@ -26,7 +26,7 @@ const SimpleStage = styled.span`
     width: 7.5rem;
     padding-block: 1rem;
     text-align: center;
-    border-radius: 1.66rem;
+    border-radius: 1.5rem;
     font-size: 0.875rem;
     line-height: 1rem;
     color: ${({ active }) =>

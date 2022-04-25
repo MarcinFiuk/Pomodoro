@@ -35,8 +35,6 @@ const MainStyled = styled.main`
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
-    font-family: ${theme.font.kumbhSans.fontFamily};
-    font-weight: ${theme.font.kumbhSans.fontWeight};
 `;
 
 const SettingButton = styled.button`

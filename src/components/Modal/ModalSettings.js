@@ -14,6 +14,22 @@ function ModalSettings({ data }) {
         if (color) dispatch(setColor(color));
     };
 
+    const changeTextContent = (id) => {
+        buttons.map((button) => {
+            if (button.id === id && button.bgcColor !== undefined) {
+                return (button.text = '\u2713');
+            }
+            if (button.id !== id && button.bgcColor !== undefined) {
+                return (button.text = '');
+            }
+        });
+    };
+
+    const handleClick = (id, font, color) => {
+        dispatchData(font, color);
+        changeTextContent(id);
+    };
+
     const buttonsXml = buttons.map((button) => {
         const { id, text, fontType, bgcColor } = button;
 
@@ -22,7 +38,7 @@ function ModalSettings({ data }) {
                 key={id}
                 font={fontType}
                 bgc={bgcColor}
-                onClick={() => dispatchData(fontType, bgcColor)}
+                onClick={() => handleClick(id, fontType, bgcColor)}
             >
                 {text}
             </ChangeSettingButton>

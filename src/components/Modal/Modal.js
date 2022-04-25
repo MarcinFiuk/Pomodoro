@@ -1,9 +1,10 @@
-import { useEffect, useCallback } from 'react';
+import { useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
+import FocusTrap from 'focus-trap-react';
 
-import { closeModal } from './../../redux/modalSlice';
+import { closeModal, setFinalProperties } from './../../redux/modalSlice';
 import { theme } from './../styles/theme';
 import { font, color } from './modalSettingData';
 import Backdrop from './Backdrop';
@@ -14,40 +15,51 @@ import ModalSettings from './ModalSettings';
 function Modal() {
     const showModal = useSelector((state) => state.modal.showModal);
     const decorationColor = useSelector((state) => state.modal.bgcColor);
+    const temporary = useSelector((state) => state.modal.temporary);
     const dispatch = useDispatch();
 
-    const closeModalHandler = useCallback(
-        (e) => {
+    useEffect(() => {
+        const closeModalHandler = (e) => {
             if (e.key === 'Escape' && showModal) {
                 dispatch(closeModal());
             }
-        },
-        [dispatch, showModal]
-    );
+        };
 
-    useEffect(() => {
         document.addEventListener('keydown', closeModalHandler);
 
         return () => document.removeEventListener('keydown', closeModalHandler);
-    }, [closeModalHandler]);
+    }, [dispatch, showModal]);
+
+    const acceptAndCloseModalHandler = () => {
+        dispatch(setFinalProperties(temporary));
+        dispatch(closeModal());
+    };
 
     return (
         showModal &&
         createPortal(
             <>
                 <Backdrop />
-                <MainWrapper>
-                    <Wrapper>
-                        <ModalHeader />
-                        <DecorationElement wide />
-                        <ModalInput />
-                        <DecorationElement />
-                        <ModalSettings data={font} />
-                        <DecorationElement />
-                        <ModalSettings data={color} />
-                    </Wrapper>
-                    <ApplyButton bgcColor={decorationColor}>Apply</ApplyButton>
-                </MainWrapper>
+                <FocusTrap>
+                    <MainWrapper>
+                        <Wrapper>
+                            <ModalHeader />
+                            <DecorationElement wide />
+                            <ModalInput />
+                            <DecorationElement />
+                            <ModalSettings data={font} />
+                            <DecorationElement />
+                            <ModalSettings data={color} />
+                        </Wrapper>
+                        <ApplyButton
+                            bgcColor={decorationColor}
+                            type='submit'
+                            onClick={acceptAndCloseModalHandler}
+                        >
+                            Apply
+                        </ApplyButton>
+                    </MainWrapper>
+                </FocusTrap>
             </>,
             document.getElementById('modal')
         )

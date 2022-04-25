@@ -1,10 +1,27 @@
 import styled from 'styled-components';
+import { useDispatch, useSelector } from 'react-redux';
+
 import { theme } from './../styles/theme';
 import { Flex } from './../styles/styledElements';
 import IconArrow from '../../assets/IconArrow';
+import convertInputLabel from './../../utils/convertInputLabel';
+import { setInputs } from './../../redux/modalSlice';
 
 const TimerInput = (props) => {
     const { label, ...rest } = props;
+    const labelAsPropertyName = convertInputLabel(label);
+    const value = useSelector(
+        (state) => state.modal.temporary?.inputs?.[labelAsPropertyName] || ''
+    );
+    const dispatch = useDispatch();
+
+    const checkAndDispatchHandler = (e) => {
+        const value = e.target.value.replace('e', '');
+        const valueAsNumber = value ? parseInt(value, 10) : 0;
+        const valueBetween0And60 = Math.max(Math.min(valueAsNumber, 60), 0);
+
+        dispatch(setInputs({ [labelAsPropertyName]: valueBetween0And60 }));
+    };
 
     return (
         <Container>
@@ -13,10 +30,9 @@ const TimerInput = (props) => {
                 <Input
                     type='number'
                     id={label}
-                    min='0'
-                    max='60'
+                    onChange={checkAndDispatchHandler}
+                    value={value}
                     {...rest}
-                    pattern='[1-9]|[1-5][0-9]|60'
                 />
                 <span>
                     <IconArrow direction='up' />

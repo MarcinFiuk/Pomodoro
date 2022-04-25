@@ -9,6 +9,7 @@ const initialState = {
         shortBreak: 5,
         longBreak: 15,
     },
+    temporary: {},
 };
 
 const modalSlice = createSlice({
@@ -20,20 +21,33 @@ const modalSlice = createSlice({
         },
         closeModal: (state) => {
             state.showModal = false;
+            state.temporary = {};
         },
         setFont: (state, action) => {
-            state.font = action.payload;
+            state.temporary.font = action.payload;
         },
         setColor: (state, action) => {
-            state.bgcColor = action.payload;
+            state.temporary.bgcColor = action.payload;
         },
         setInputs: (state, action) => {
-            state.inputs = action.payload;
+            state.temporary.inputs = {
+                ...state.temporary.inputs,
+                ...action.payload,
+            };
+        },
+        setFinalProperties: (state, action) => {
+            return (state = { ...state, ...action.payload });
         },
     },
 });
 
-export const { openModal, closeModal, setFont, setColor, setInputs } =
-    modalSlice.actions;
+export const {
+    openModal,
+    closeModal,
+    setFont,
+    setColor,
+    setInputs,
+    setFinalProperties,
+} = modalSlice.actions;
 
 export default modalSlice.reducer;
