@@ -17,12 +17,15 @@ const Main = () => {
 
     return (
         <MainStyled>
-            <h1>
+            <h1 aria-label='pomodoro'>
                 <Logo />
             </h1>
             <ActiveStages />
             <Timer />
-            <SettingButton onClick={showModalHandler}>
+            <SettingButton
+                onClick={showModalHandler}
+                aria-label='turn on settings'
+            >
                 <IconSetting />
             </SettingButton>
         </MainStyled>

@@ -47,7 +47,7 @@ function ModalSettings({ data }) {
     };
 
     const buttonsXml = buttons.map((button) => {
-        const { id, text, active, fontType, bgcColor } = button;
+        const { id, text, active, fontType, bgcColor, ariaLabel } = button;
 
         return (
             <ChangeSettingButton
@@ -55,6 +55,7 @@ function ModalSettings({ data }) {
                 key={id}
                 font={fontType}
                 bgc={bgcColor}
+                aria-label={ariaLabel}
                 onClick={() => handleClick(id, fontType, bgcColor)}
             >
                 {text}

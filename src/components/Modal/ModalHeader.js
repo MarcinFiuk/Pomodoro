@@ -16,7 +16,7 @@ function ModalHeader() {
     return (
         <SingleWrapper as='header'>
             <h2 id='dialog_label'>Settings</h2>
-            <CloseIconStyle onClick={closeModalHandler}>
+            <CloseIconStyle onClick={closeModalHandler} aria-label='close'>
                 <IconClose />
             </CloseIconStyle>
         </SingleWrapper>

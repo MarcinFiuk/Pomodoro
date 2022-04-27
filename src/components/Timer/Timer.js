@@ -79,6 +79,7 @@ const TimeStyled = styled.span`
     font-size: clamp(4.5rem, 12vw, 6.25rem);
     line-height: clamp(6.25rem, 13vw, 7, 75rem);
     letter-spacing: -4px;
+    background-color: ${theme.color.backgroundSecondary};
 `;
 
 const Button = styled.button`
@@ -89,6 +90,7 @@ const Button = styled.button`
     letter-spacing: 1rem;
     color: inherit;
     padding: 0;
+    background-color: ${theme.color.backgroundSecondary};
 `;
 
 export default Timer;
