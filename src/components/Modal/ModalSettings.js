@@ -10,11 +10,15 @@ function ModalSettings({ data }) {
     const dispatch = useDispatch();
 
     const dispatchData = (font, color) => {
-        if (font) dispatch(setFont(font));
-        if (color) dispatch(setColor(color));
+        if (font) {
+            dispatch(setFont(font));
+        }
+        if (color) {
+            dispatch(setColor(color));
+        }
     };
 
-    const changeTextContent = (id) => {
+    const activeColorButton = (id) => {
         buttons.map((button) => {
             if (button.id === id && button.bgcColor !== undefined) {
                 return (button.text = '\u2713');
@@ -25,16 +29,29 @@ function ModalSettings({ data }) {
         });
     };
 
+    const activeFontButton = (id) => {
+        buttons.map((button) => {
+            if (button.id === id && button.fontType !== undefined) {
+                return (button.active = true);
+            }
+            if (button.id !== id && button.fontType !== undefined) {
+                return (button.active = false);
+            }
+        });
+    };
+
     const handleClick = (id, font, color) => {
         dispatchData(font, color);
-        changeTextContent(id);
+        activeColorButton(id);
+        activeFontButton(id);
     };
 
     const buttonsXml = buttons.map((button) => {
-        const { id, text, fontType, bgcColor } = button;
+        const { id, text, active, fontType, bgcColor } = button;
 
         return (
             <ChangeSettingButton
+                highlight={active}
                 key={id}
                 font={fontType}
                 bgc={bgcColor}
@@ -83,8 +100,19 @@ const ChangeSettingButton = styled.button`
     height: 40px;
     border-radius: 50%;
     border: none;
-    background-color: ${({ bgc }) =>
-        bgc ? theme.color[bgc] : theme.color.textSecond};
+    color: ${({ highlight }) =>
+        highlight
+            ? theme.color.backgroundThird
+            : theme.color.backgroundSecondary};
+    background-color: ${({ bgc, highlight }) => {
+        if (bgc) {
+            return theme.color[bgc];
+        }
+        if (highlight) {
+            return theme.color.backgroundSecondary;
+        }
+        return theme.color.textSecond;
+    }};
     font-family: ${({ font }) =>
         font ? theme.font[font].fontFamily : 'inherit'};
     font-weight: ${({ font }) =>
@@ -93,11 +121,6 @@ const ChangeSettingButton = styled.button`
 
     &:first-of-type {
         margin-left: 0;
-    }
-
-    &:active {
-        background-color: black;
-        color: white;
     }
 `;
 

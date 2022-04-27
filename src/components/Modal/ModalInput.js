@@ -9,12 +9,12 @@ function ModalInput() {
         <SingleWrapper padding>
             <h3>Time (minutes)</h3>
             <SingleWrapper
-                as='form' //not sure whether it's necessary'
+                as='form'
                 tabletDirection='row'
                 gapMobile='0.5rem'
                 gapTablet='1.3125rem'
             >
-                <TimerInput label='pomodoro' />
+                <TimerInput label='pomodoro' autoFocus />
                 <TimerInput label='short break' />
                 <TimerInput label='long break' />
             </SingleWrapper>

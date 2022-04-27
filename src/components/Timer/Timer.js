@@ -1,24 +1,38 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import { theme } from './../styles/theme';
 import useTimer from './../../hooks/useTimer';
 import fromSecToMin from '../../utils/fromSecToMin';
-import TimerInput from './../Input/TimerInput';
 import ProgressBar from './../ProgressBar/ProgressBar';
+import { setIndexOfActiveElement } from './../../redux/modalSlice';
 
-const Timer = ({ dynamicColor }) => {
-    const inputs = useSelector((state) => state.modal.inputs);
+const Timer = () => {
     const [reset, setReset] = useState(false);
+    const startButton = useRef();
+    const inputs = useSelector((state) => state.modal.inputs);
+    const isModalOpen = useSelector((state) => state.modal.showModal);
+    const dispatch = useDispatch();
 
     const { pomodoro, shortBreak, longBreak } = inputs;
 
-    const { timer, timerTime, isRunning, setIsRunning } = useTimer(
+    const { index, timer, timerTime, isRunning, setIsRunning } = useTimer(
         pomodoro * 60,
         shortBreak * 60,
         longBreak * 60
     );
+
+    useEffect(() => {
+        dispatch(setIndexOfActiveElement(index));
+    }, [dispatch, index]);
+
+    useEffect(() => {
+        if (!isModalOpen) {
+            startButton.current.focus();
+        }
+    }, [isModalOpen]);
 
     const timerStartHandler = () => {
         setIsRunning((prev) => !prev);
@@ -36,11 +50,12 @@ const Timer = ({ dynamicColor }) => {
                 reset={reset}
                 pause={!isRunning}
                 timer={timer}
-                dynamicColor={dynamicColor}
             >
                 <TimerWrapper>
                     <TimeStyled>{timeToDisplay}</TimeStyled>
-                    <Button onClick={timerStartHandler}>{buttonStatus}</Button>
+                    <Button onClick={timerStartHandler} ref={startButton}>
+                        {buttonStatus}
+                    </Button>
                 </TimerWrapper>
             </ProgressBar>
         </>
@@ -61,8 +76,7 @@ const TimerWrapper = styled.div`
 `;
 
 const TimeStyled = styled.span`
-    font-size: clamp(5rem, 12vw, 6.25rem);
-    /* font-weight: 400; */
+    font-size: clamp(4.5rem, 12vw, 6.25rem);
     line-height: clamp(6.25rem, 13vw, 7, 75rem);
     letter-spacing: -4px;
 `;

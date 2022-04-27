@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
     showModal: false,
+    indexOfActiveElement: 0,
     font: 'kumbhSans',
     bgcColor: 'decorationFirst',
     inputs: {
@@ -38,6 +39,9 @@ const modalSlice = createSlice({
         setFinalProperties: (state, action) => {
             return (state = { ...state, ...action.payload });
         },
+        setIndexOfActiveElement: (state, action) => {
+            state.indexOfActiveElement = action.payload;
+        },
     },
 });
 
@@ -48,6 +52,7 @@ export const {
     setColor,
     setInputs,
     setFinalProperties,
+    setIndexOfActiveElement,
 } = modalSlice.actions;
 
 export default modalSlice.reducer;

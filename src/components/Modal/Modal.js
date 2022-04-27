@@ -66,15 +66,17 @@ function Modal() {
     );
 }
 
+const wrapperWidth = 'clamp(327px, 71vw, 540px)';
+
 const MainWrapper = styled.div`
     position: absolute;
     top: 10%;
-    left: calc((100% - clamp(327px, 71vw, 540px)) / 2);
+    left: calc((100% - ${wrapperWidth}) / 2);
     z-index: 999;
 `;
 
 const Wrapper = styled.div`
-    width: clamp(327px, 71vw, 540px);
+    width: ${wrapperWidth};
     background-color: ${theme.color.backgroundThird};
     padding-block: clamp(1.5rem, 3.6vw, 2.125rem);
     padding-inline: clamp(1.5rem, 3.6vw, 2.5rem);

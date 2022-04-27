@@ -5,9 +5,10 @@ export const font = {
             id: 'font-1',
             text: 'Aa',
             fontType: 'kumbhSans',
+            active: true,
         },
-        { id: 'font-2', text: 'Aa', fontType: 'robotoSlab' },
-        { id: 'font-3', text: 'Aa', fontType: 'spaceMono' },
+        { id: 'font-2', text: 'Aa', fontType: 'robotoSlab', active: false },
+        { id: 'font-3', text: 'Aa', fontType: 'spaceMono', active: false },
     ],
 };
 
