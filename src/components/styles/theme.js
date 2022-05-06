@@ -4,10 +4,11 @@ export const theme = {
         backgroundSecondary: 'hsl(235, 39%, 14%)',
         backgroundThird: 'hsl(0,0%,100%)',
         decorationFirst: 'hsl(0,91%,71%)',
-        decorationSecond: 'hsl(182,91%71%)',
+        decorationSecond: 'hsl(182,91%,71%)',
         decorationThird: 'hsl(284,89%,74%)',
         textFirst: 'hsl(227, 100%,92%)',
         textSecond: 'hsl(229,52%,96%)',
+        backdrop: 'hsla(234, 47%, 8%, 0.5)',
     },
 
     font: {

@@ -5,9 +5,9 @@ export const GlobalStyle = createGlobalStyle`
 
 body{
     background-color: ${theme.color.backgroundPrimary};
-    font-family: sans-serif;
     display: grid;
-    height: 100vh;
     place-items: center;
+    font-family:${({ font }) => theme.font[font].fontFamily};
+    font-weight:${({ font }) => theme.font[font].fontWeight};
 }
 `;

@@ -43,7 +43,7 @@ function useTimer(pomodoro, shortBreak, longBreak) {
         isRunning ? precisionInMs : null
     );
 
-    return { timer, timerTime, isRunning, setIsRunning };
+    return { index, timer, timerTime, isRunning, setIsRunning };
 }
 
 export default useTimer;
