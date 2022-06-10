@@ -1,4 +1,4 @@
-# Frontend Mentor - REST Countries API with color theme switcher solution
+# Frontend Mentor - Pomodoro app solution
 
 This is a solution to the [Pomodoro app challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/pomodoro-app-KBFnycJ6G). Frontend Mentor challenges help you improve your coding skills by building realistic projects.
 
@@ -21,7 +21,6 @@ This is a solution to the [Pomodoro app challenge on Frontend Mentor](https://ww
 -   Mobile-first workflow
 -   [React](https://reactjs.org/) - JS library
 -   [Styled Components](https://styled-components.com/) - For styles
--   [React-icons](https://react-icons.github.io/react-icons/) - For icons
 -   [Focus-trap-react](https://github.com/focus-trap/focus-trap-react) - For accessibility (used in modal)
 -   [Redux](https://redux.js.org/) - For store state (used for a learning purpose)
 
